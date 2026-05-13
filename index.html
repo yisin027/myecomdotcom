@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿里山雲霧咖啡 | 品味雲端上的純粹</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --forest-green: #2D4F1E;
+            --cream-white: #FDFBF7;
+            --wood-brown: #8B5E3C;
+            --mist-gray: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Serif TC', serif;
+            background-color: var(--cream-white);
+            color: #333;
+        }
+
+        .zen-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .nav-scrolled {
+            background-color: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .cart-sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        /* 隱藏滾動條但保持功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 px-6 py-6 flex justify-between items-center text-white">
+        <div class="text-2xl font-bold tracking-widest uppercase">Alishan Cloud</div>
+        <div class="hidden md:flex space-x-8 text-sm tracking-widest font-light">
+            <a href="#about" class="hover:opacity-60 transition">產地故事</a>
+            <a href="#products" class="hover:opacity-60 transition">精品豆專區</a>
+            <a href="#" class="hover:opacity-60 transition">沖煮指南</a>
+        </div>
+        <div class="flex items-center space-x-6">
+            <button onclick="toggleCart()" class="relative p-2">
+                <i class="fa-solid fa-bag-shopping text-xl"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-[#8B5E3C] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="h-screen hero-gradient flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl md:text-7xl font-serif mb-6 leading-tight">品味雲端上的純粹</h1>
+            <p class="text-lg md:text-xl font-light mb-10 tracking-widest opacity-90">海拔 1200 公尺，與雲霧共生的莊園精品咖啡</p>
+            <a href="#products" class="inline-block border border-white px-10 py-4 hover:bg-white hover:text-black transition-all duration-500 tracking-widest text-sm uppercase">立即探索</a>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="rounded-2xl overflow-hidden zen-shadow h-[500px]">
+                <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Alishan Coffee Plantation">
+            </div>
+            <div class="space-y-6">
+                <span class="text-[#8B5E3C] font-semibold tracking-widest text-sm uppercase">Origin Story</span>
+                <h2 class="text-3xl md:text-5xl font-serif text-[#2D4F1E]">從雲霧中誕生的果實</h2>
+                <p class="text-gray-600 leading-loose">
+                    阿里山的特殊微氣候，讓咖啡豆在劇烈的日夜溫差中緩慢熟成。每一顆咖啡豆都承載了高山土壤的芬芳與清晨露水的滋養。我們堅持手選採摘，確保只有最完美的紅果實能進入烘豆機，轉化成您杯中的那一抹香醇。
+                </p>
+                <div class="pt-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full border border-[#8B5E3C] flex items-center justify-center">
+                            <i class="fa-solid fa-leaf text-[#8B5E3C]"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">永續農法</h4>
+                            <p class="text-sm text-gray-500">不使用化學肥料，尊重每一寸土地。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-24 bg-[#F2F0EB]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-serif mb-4">手選精品專區</h2>
+                <div class="w-20 h-1 bg-[#8B5E3C] mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- 商品卡片 1 -->
+                <div class="bg-white rounded-3xl p-8 zen-shadow group transition-all hover:-translate-y-2">
+                    <div class="relative mb-8 aspect-square rounded-2xl overflow-hidden bg-[#FDFBF7]">
+                        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=500&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Coffee Bean">
+                        <span class="absolute top-4 left-4 bg-white/80 backdrop-blur px-3 py-1 text-xs tracking-widest rounded-full uppercase">限時預購</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">阿里山手選精品豆 - 雲霧莊園</h3>
+                    <p class="text-gray-500 text-sm mb-6">風味：花香、柑橘、黑糖餘韻</p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <label class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 block">焙度選擇</label>
+                            <select id="roast-1" class="w-full border-b border-gray-200 py-2 bg-transparent text-sm focus:outline-none focus:border-[#8B5E3C]">
+                                <option>淺焙 (Light Roast)</option>
+                                <option>中焙 (Medium Roast)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 block">研磨度</label>
+                            <select id="grind-1" class="w-full border-b border-gray-200 py-2 bg-transparent text-sm focus:outline-none focus:border-[#8B5E3C]">
+                                <option>全豆 (Whole Beans)</option>
+                                <option>粗研磨 (Cold Brew)</option>
+                                <option>中研磨 (Hand Drip)</option>
+                                <option>細研磨 (Espresso)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-serif">NT$ 880</span>
+                        <button onclick="addToCart('阿里山手選精品豆', 880, 'roast-1', 'grind-1')" class="bg-[#2D4F1E] text-white px-6 py-3 rounded-full hover:bg-black transition duration-300">
+                            加入購物車
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 這裡可以快速複製更多商品卡片 -->
+                <div class="hidden md:block bg-white/50 border border-dashed border-gray-300 rounded-3xl p-8 flex flex-col items-center justify-center text-gray-400">
+                    <i class="fa-solid fa-plus-circle text-4xl mb-4"></i>
+                    <p>更多新品即將解鎖...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white z-[60] shadow-2xl cart-sidebar translate-x-full flex flex-col">
+        <div class="p-8 border-b flex justify-between items-center">
+            <h2 class="text-2xl font-serif uppercase tracking-widest">購物清單</h2>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-black transition">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-6 no-scrollbar">
+            <!-- 動態注入購物車商品 -->
+            <div class="text-center py-20 text-gray-400 italic">購物車目前是空的...</div>
+        </div>
+
+        <div class="p-8 border-t bg-gray-50">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-gray-500">總計金額</span>
+                <span id="cart-total" class="text-2xl font-serif">NT$ 0</span>
+            </div>
+            <button onclick="openCheckout()" class="w-full bg-[#8B5E3C] text-white py-5 rounded-xl font-bold tracking-widest hover:brightness-110 transition shadow-lg">
+                前往結帳
+            </button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 modal-overlay" onclick="closeCheckout()"></div>
+        <div class="bg-white w-full max-w-lg rounded-3xl p-10 relative z-10 zen-shadow scale-95 transition-transform duration-300" id="modal-content">
+            <h3 class="text-3xl font-serif mb-6 text-center">結帳資訊</h3>
+            <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-6">
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">收件人姓名</label>
+                    <input type="text" required class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#8B5E3C]">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">聯繫電話</label>
+                    <input type="tel" required class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#8B5E3C]">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">收件地址</label>
+                    <input type="text" required class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#8B5E3C]">
+                </div>
+                <div class="pt-4 text-center">
+                    <button type="submit" class="bg-[#2D4F1E] text-white px-12 py-4 rounded-full hover:bg-black transition w-full">確認下單</button>
+                    <button type="button" onclick="closeCheckout()" class="mt-4 text-gray-400 text-sm">返回購物車</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="success-toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[80] bg-white text-[#2D4F1E] px-10 py-5 rounded-2xl shadow-2xl hidden border border-green-100 flex items-center space-x-4">
+        <i class="fa-solid fa-circle-check text-2xl text-green-500"></i>
+        <span class="font-bold tracking-widest">訂單已成立，我們將儘速為您出貨！</span>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('coffee_cart')) || [];
+        
+        // 初始化載入
+        window.onload = () => {
+            updateCartUI();
+            handleScroll();
+        };
+
+        // 滾動效果：導覽列變色
+        function handleScroll() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+                nav.classList.remove('text-white');
+                nav.classList.add('text-[#2D4F1E]');
+            } else {
+                nav.classList.remove('nav-scrolled');
+                nav.classList.add('text-white');
+                nav.classList.remove('text-[#2D4F1E]');
+            }
+        }
+        window.addEventListener('scroll', handleScroll);
+
+        // 加入購物車
+        function addToCart(name, price, roastId, grindId) {
+            const roast = document.getElementById(roastId).value;
+            const grind = document.getElementById(grindId).value;
+            
+            const item = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                roast: roast,
+                grind: grind
+            };
+
+            cart.push(item);
+            saveCart();
+            updateCartUI();
+            toggleCart(true); // 自動開啟購物車顯示
+        }
+
+        function saveCart() {
+            localStorage.setItem('coffee_cart', JSON.stringify(cart));
+        }
+
+        // 更新 UI
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const totalDisplay = document.getElementById('cart-total');
+            
+            // 更新數量標記
+            if (cart.length > 0) {
+                countBadge.innerText = cart.length;
+                countBadge.style.opacity = '1';
+            } else {
+                countBadge.style.opacity = '0';
+            }
+
+            // 更新清單
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-20 text-gray-400 italic">購物車目前是空的...</div>';
+                totalDisplay.innerText = 'NT$ 0';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map((item, index) => {
+                total += item.price;
+                return `
+                    <div class="flex justify-between items-start border-b border-gray-50 pb-6">
+                        <div>
+                            <h4 class="font-bold">${item.name}</h4>
+                            <p class="text-xs text-gray-400 mt-1">${item.roast} | ${item.grind}</p>
+                            <span class="text-sm font-serif mt-2 block">NT$ ${item.price}</span>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-400 transition">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+            
+            totalDisplay.innerText = `NT$ ${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if (forceOpen) {
+                sidebar.classList.remove('translate-x-full');
+            } else {
+                sidebar.classList.toggle('translate-x-full');
+            }
+        }
+
+        // 結帳邏輯
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert("請先將商品加入購物車");
+                return;
+            }
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('modal-content').classList.remove('scale-95');
+                document.getElementById('modal-content').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCheckout() {
+            const modal = document.getElementById('checkout-modal');
+            document.getElementById('modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            
+            // 模擬請求延遲
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = "處理中...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                closeCheckout();
+                // 顯示成功吐司
+                const toast = document.getElementById('success-toast');
+                toast.classList.remove('hidden');
+                
+                // 清空購物車
+                cart = [];
+                saveCart();
+                updateCartUI();
+                toggleCart(false);
+
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }, 4000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
